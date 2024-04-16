@@ -171,4 +171,19 @@ public class TeSSA_Tac_Toe_Tests {
         int actual = Integer.parseInt(actualjlabel);
         assertEquals(1,actual);
     }
+    @Test
+    public void testSpieler2Punkte(){
+        frame.turn(1,2);
+        frame.turn(0,2);
+        frame.turn(1,1);
+        frame.turn(0,3);
+        frame.turn(2,1);
+        WinState winner = frame.turn(0,1);
+
+
+        frame.checkWinner(winner);
+        String actualjlabel = frame.getPlayer2_score().getText();
+        int actual = Integer.parseInt(actualjlabel);
+        assertEquals(1,actual);
+    }
 }

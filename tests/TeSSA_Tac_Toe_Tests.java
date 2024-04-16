@@ -18,7 +18,7 @@ public class TeSSA_Tac_Toe_Tests {
     private static final int TIME_OUT = 0;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void beforeEach() throws Exception {
         p1 = new Player("Player 1", Ressources.icon_x);
         p2 = new Player("Player 2", Ressources.icon_o);
         board = new Board(4, 5, 3, p1, p2);
@@ -112,4 +112,25 @@ public class TeSSA_Tac_Toe_Tests {
         assertSame(WinState.none, winner);
     }
 
+    @Test
+    public void testGewinnÜberEck()  {
+        frame.turn(2, 0);
+        frame.turn(2, 1);
+        frame.turn(2, 2);
+        frame.turn(3, 1);
+        frame.turn(2, 3);
+        WinState winner = frame.turn(3, 2);
+        assertSame(WinState.none, winner);
+    }
+
+    @Test
+    public void rightBottomCorner() {
+        frame.turn(3, 4);
+
+        int actual1 = board.get2d(3, 4);
+        assertEquals(1, actual1);
+
+        int actual2 = board.get2d(3, 3);
+        assertEquals(0, actual2);
+    }
 }

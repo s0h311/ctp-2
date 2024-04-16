@@ -124,6 +124,27 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @Test
+    public void testUnentschieden()  {
+        frame.turn(0, 0);
+        frame.turn(1, 0);
+        frame.turn(2, 0);
+        frame.turn(3, 0);
+        frame.turn(1, 1);
+        frame.turn(0, 1);
+        frame.turn(3, 1);
+        frame.turn(2, 1);
+        frame.turn(1, 2);
+        frame.turn(0, 2);
+        frame.turn(3, 2);
+        frame.turn(2, 2);
+        frame.turn(0, 3);
+        frame.turn(1, 3);
+        frame.turn(2, 3);
+        WinState winner = frame.turn(3, 3);
+        assertSame(WinState.none, winner);
+    }
+
+    @Test
     public void rightBottomCorner() {
         frame.turn(3, 4);
 

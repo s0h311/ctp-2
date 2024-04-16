@@ -18,10 +18,10 @@ public class TeSSA_Tac_Toe_Tests {
     private static final int TIME_OUT = 0;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void beforeEach() throws Exception {
         p1 = new Player("Player 1", Ressources.icon_x);
         p2 = new Player("Player 2", Ressources.icon_o);
-        board = new Board(3, 3, 3, p1, p2);
+        board = new Board(4, 5, 3, p1, p2);
         frame = new MainWindow(p1, p2, board);
         frame.setVisible(true);
         MainWindow.setDebugg(true);
@@ -91,4 +91,14 @@ public class TeSSA_Tac_Toe_Tests {
         frame.settingsFrame();
     }
 
+    @Test
+    public void rightBottomCorner() {
+        frame.turn(3, 4);
+
+        int actual1 = board.get2d(3, 4);
+        assertEquals(1, actual1);
+
+        int actual2 = board.get2d(3, 3);
+        assertEquals(0, actual2);
+    }
 }

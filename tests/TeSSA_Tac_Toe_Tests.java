@@ -21,7 +21,7 @@ public class TeSSA_Tac_Toe_Tests {
     public void setUp() throws Exception {
         p1 = new Player("Player 1", Ressources.icon_x);
         p2 = new Player("Player 2", Ressources.icon_o);
-        board = new Board(3, 3, 3, p1, p2);
+        board = new Board(4, 5, 3, p1, p2);
         frame = new MainWindow(p1, p2, board);
         frame.setVisible(true);
         MainWindow.setDebugg(true);
@@ -89,6 +89,27 @@ public class TeSSA_Tac_Toe_Tests {
     @Test
     public void test07() {
         frame.settingsFrame();
+    }
+
+    //i - Fehler
+    @Test
+    public void testIgnoirertLeerVonOben()  {
+        frame.turn(0, 0);
+        frame.turn(1, 2);
+        frame.turn(1, 0);
+        frame.turn(2, 2);
+        WinState winner = frame.turn(3, 0);
+        assertSame(WinState.none, winner);
+    }
+
+    @Test
+    public void testIgnoirertLeerVonUnten()  {
+        frame.turn(3, 0);
+        frame.turn(1, 2);
+        frame.turn(2, 0);
+        frame.turn(2, 2);
+        WinState winner = frame.turn(0, 0);
+        assertSame(WinState.none, winner);
     }
 
 }

@@ -8,6 +8,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TeSSA_Tac_Toe_Tests {
@@ -153,5 +155,20 @@ public class TeSSA_Tac_Toe_Tests {
 
         int actual2 = board.get2d(3, 3);
         assertEquals(0, actual2);
+    }
+
+    @Test
+    public void testSpieler1Punkte(){
+        frame.turn(0,1);
+        frame.turn(0,2);
+        frame.turn(1,1);
+        frame.turn(0,3);
+        WinState winner = frame.turn(2,1);
+
+
+        frame.checkWinner(winner);
+        String actualjlabel = frame.getPlayer1_score().getText();
+        int actual = Integer.parseInt(actualjlabel);
+        assertEquals(1,actual);
     }
 }

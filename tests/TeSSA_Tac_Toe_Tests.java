@@ -186,4 +186,14 @@ public class TeSSA_Tac_Toe_Tests {
         int actual = Integer.parseInt(actualjlabel);
         assertEquals(1,actual);
     }
+    @Test
+    public void testVFormationKeinGewinn(){
+        frame.turn(0,1);
+        frame.turn(0,2);
+        frame.turn(1,2);
+        frame.turn(1,3);
+        WinState winner = frame.turn(0,3);
+
+        assertSame(WinState.none, winner);
+    }
 }

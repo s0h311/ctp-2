@@ -196,4 +196,30 @@ public class TeSSA_Tac_Toe_Tests {
 
         assertSame(WinState.none, winner);
     }
+    @Test
+        public void testFeldSymbolErscheintAufAngeklicktemFeld(){
+        frame.turn(0,1);
+        frame.turn(0,2);
+        frame.turn(0,3);
+        frame.turn(0,4);
+        frame.turn(1,0);
+        frame.turn(1,1);
+        frame.turn(1,2);
+        frame.turn(1,3);
+        frame.turn(1,4);
+        frame.turn(2,1);
+        frame.turn(2,0);
+        frame.turn(2,3);
+        frame.turn(2,2);
+        frame.turn(3,0);
+        frame.turn(2,4);
+        frame.turn(3,2);
+        frame.turn(3,1);
+        frame.turn(3,4);
+        frame.turn(3,3);
+        frame.turn(3,4);
+
+        int actual = board.get2d(0, 0);
+        assertEquals(0, actual);
+    }
 }

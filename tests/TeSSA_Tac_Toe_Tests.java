@@ -147,6 +147,16 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @Test
+    public void testFeld_4_0()  {
+        frame.turn(2, 2);
+        frame.turn(1, 2);
+        frame.turn(1, 3);
+        frame.turn(0, 3);
+        WinState winner = frame.turn(0, 4);
+        assertSame(WinState.player1, winner);
+    }
+
+    @Test
     public void rightBottomCorner() {
         frame.turn(3, 4);
 

@@ -231,6 +231,18 @@ public class TeSSA_Tac_Toe_Tests {
         assertSame(WinState.none, winner);
     }
 
+    //Fehler 9
+    @Test
+    public void BackSlash(){
+        frame.turn(1, 4);//PLayer1
+        frame.turn(2, 2);//Player2
+        frame.turn(2, 3);//PLayer1
+        frame.turn(3, 1);//Player2
+        frame.turn(3, 2);//PLayer1
+        WinState winner = board.checkWin();
+        assertSame(WinState.player1, winner);
+    }
+
     //Fehler 10
     @Test
     public void testFeld_4_0()  {

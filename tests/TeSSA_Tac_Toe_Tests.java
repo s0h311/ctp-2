@@ -287,13 +287,34 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @Test
-    public void changePlayerIcon(){
+    public void testSetIcon(){
         p1.setIcon(Ressources.icon_tessa_blue);
         p2.setIcon(Ressources.icon_tessa_red);
-        assertEquals(p1.getIconString(),"TeSSA blue");
-        assertEquals(p2.getIconString(),"TeSSA red");
+
+        assertEquals("TeSSA blue", p1.getIconString());
+        assertEquals("TeSSA red", p2.getIconString());
+    }
+
+    @Test
+    public void testSetIconToNull(){
         p1.setIcon(null);
-        assertEquals(p1.getIconString(),"");
-        assertEquals(p1.toString(),"[Player 1]");
+        assertEquals("", p1.getIconString());
+    }
+
+    @Test
+    public void testToString(){
+        assertEquals("[Player 1]", p1.toString());
+    }
+
+    @Test
+    public void checkBoard(){
+        assertEquals(board.getM()*board.getN(),board.getSize());
+        frame.turn(0, 0);
+        frame.turn(0, 1);
+        frame.turn(1, 0);
+        frame.turn(1, 1);
+        frame.turn(2, 1);
+        WinState winSt = frame.turn(1, 0);
+        frame.checkWinner(winSt);
     }
 }

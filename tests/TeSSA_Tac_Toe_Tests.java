@@ -208,15 +208,11 @@ public class TeSSA_Tac_Toe_Tests {
     }
     @Test
         public void testFeldSymbolErscheintAufAngeklicktemFeld(){
-        frame.turn(0,1);
-        frame.turn(0,2);
-        frame.turn(0,3);
-        frame.turn(0,4);
-        frame.turn(1,0);
-        frame.turn(1,1);
-        frame.turn(1,2);
-        frame.turn(1,3);
-        frame.turn(1,4);
+        for (int i=1;i<5;i++){
+            frame.turn(0,i);
+        }for (int i=0;i<5;i++){
+            frame.turn(1,i);
+        }
         frame.turn(2,1);
         frame.turn(2,0);
         frame.turn(2,3);

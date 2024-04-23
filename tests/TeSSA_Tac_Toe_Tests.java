@@ -8,7 +8,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.Component;
+import java.awt.Container;
 import javax.swing.*;
+
+import java.util.List;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -165,7 +170,6 @@ public class TeSSA_Tac_Toe_Tests {
         frame.turn(0,3);
         WinState winner = frame.turn(2,1);
 
-
         frame.checkWinner(winner);
         String actualjlabel = frame.getPlayer1_score().getText();
         int actual = Integer.parseInt(actualjlabel);
@@ -195,5 +199,35 @@ public class TeSSA_Tac_Toe_Tests {
         WinState winner = frame.turn(0,3);
 
         assertSame(WinState.none, winner);
+    }
+
+    @Test
+    public void twoRedPlayersShouldNotBePossible() {
+        Container container = frame.settingsFrame().getContentPane();
+        Component[] containerComponents = container.getComponents();
+
+        JPanel panel = (JPanel) containerComponents[0];
+        Component[] components = panel.getComponents();
+
+        List<JComboBox> comboBoxes = new ArrayList<>();
+        JButton saveButton = new JButton();
+
+        for (Component component : components) {
+            if (component instanceof JComboBox) {
+                comboBoxes.add((JComboBox) component);
+            }
+
+            if (component instanceof JButton && ((JButton) component).getText().equals("Save changes")) {
+                saveButton = (JButton) component;
+            }
+        }
+
+        comboBoxes.get(0).setSelectedItem("TeSSA Red");
+        comboBoxes.get(1).setSelectedItem("X");
+
+        saveButton.doClick();
+
+        assertEquals( "TeSSA red", p1.getIconString());
+        assertEquals("O", p2.getIconString());
     }
 }

@@ -253,4 +253,15 @@ public class TeSSA_Tac_Toe_Tests {
         WinState winner = frame.turn(0, 4);
         assertSame(WinState.player1, winner);
     }
+
+    @Test
+    public void changePlayerIcon(){
+        p1.setIcon(Ressources.icon_tessa_blue);
+        p2.setIcon(Ressources.icon_tessa_red);
+        assertEquals(p1.getIconString(),"TeSSA blue");
+        assertEquals(p2.getIconString(),"TeSSA red");
+        p1.setIcon(null);
+        assertEquals(p1.getIconString(),"");
+        assertEquals(p1.toString(),"[Player 1]");
+    }
 }

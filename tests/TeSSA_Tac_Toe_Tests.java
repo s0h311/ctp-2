@@ -98,59 +98,7 @@ public class TeSSA_Tac_Toe_Tests {
         frame.settingsFrame();
     }
 
-    //i - Fehler
-    @Test
-    public void testIgnoirertLeerVonOben()  {
-        frame.turn(0, 0);
-        frame.turn(1, 2);
-        frame.turn(1, 0);
-        frame.turn(2, 2);
-        WinState winner = frame.turn(3, 0);
-        assertSame(WinState.none, winner);
-    }
-
-    @Test
-    public void testIgnoirertLeerVonUnten()  {
-        frame.turn(3, 0);
-        frame.turn(1, 2);
-        frame.turn(2, 0);
-        frame.turn(2, 2);
-        WinState winner = frame.turn(0, 0);
-        assertSame(WinState.none, winner);
-    }
-
-    @Test
-    public void testGewinnÜberEck()  {
-        frame.turn(2, 0);
-        frame.turn(2, 1);
-        frame.turn(2, 2);
-        frame.turn(3, 1);
-        frame.turn(2, 3);
-        WinState winner = frame.turn(3, 2);
-        assertSame(WinState.none, winner);
-    }
-
-    @Test
-    public void testUnentschieden()  {
-        frame.turn(0, 0);
-        frame.turn(1, 0);
-        frame.turn(2, 0);
-        frame.turn(3, 0);
-        frame.turn(1, 1);
-        frame.turn(0, 1);
-        frame.turn(3, 1);
-        frame.turn(2, 1);
-        frame.turn(1, 2);
-        frame.turn(0, 2);
-        frame.turn(3, 2);
-        frame.turn(2, 2);
-        frame.turn(0, 3);
-        frame.turn(1, 3);
-        frame.turn(2, 3);
-        WinState winner = frame.turn(3, 3);
-        assertSame(WinState.none, winner);
-    }
-
+    //Fehler 1
     @Test
     public void rightBottomCorner() {
         frame.turn(3, 4);
@@ -162,6 +110,19 @@ public class TeSSA_Tac_Toe_Tests {
         assertEquals(0, actual2);
     }
 
+    //Fehler 2
+    @Test
+    public void testGewinnÜberEck()  {
+        frame.turn(2, 0);
+        frame.turn(2, 1);
+        frame.turn(2, 2);
+        frame.turn(3, 1);
+        frame.turn(2, 3);
+        WinState winner = frame.turn(3, 2);
+        assertSame(WinState.none, winner);
+    }
+
+    //Fehler 3
     @Test
     public void testSpieler1Punkte(){
         frame.turn(0,1);
@@ -190,17 +151,30 @@ public class TeSSA_Tac_Toe_Tests {
         int actual = Integer.parseInt(actualjlabel);
         assertEquals(1,actual);
     }
-    @Test
-    public void testVFormationKeinGewinn(){
-        frame.turn(0,1);
-        frame.turn(0,2);
-        frame.turn(1,2);
-        frame.turn(1,3);
-        WinState winner = frame.turn(0,3);
 
+    //Fehler 4.1
+    @Test
+    public void testIgnoirertLeerVonOben()  {
+        frame.turn(0, 0);
+        frame.turn(1, 2);
+        frame.turn(1, 0);
+        frame.turn(2, 2);
+        WinState winner = frame.turn(3, 0);
         assertSame(WinState.none, winner);
     }
 
+    //Fehler 4.2
+    @Test
+    public void testIgnoirertLeerVonUnten()  {
+        frame.turn(3, 0);
+        frame.turn(1, 2);
+        frame.turn(2, 0);
+        frame.turn(2, 2);
+        WinState winner = frame.turn(0, 0);
+        assertSame(WinState.none, winner);
+    }
+
+    //Fehler 5
     @Test
     public void twoRedPlayersShouldNotBePossible() {
         Container container = frame.settingsFrame().getContentPane();
@@ -227,7 +201,99 @@ public class TeSSA_Tac_Toe_Tests {
 
         saveButton.doClick();
 
-        assertEquals( "TeSSA red", p1.getIconString());
+        assertEquals("TeSSA red", p1.getIconString());
         assertEquals("O", p2.getIconString());
+    }
+
+    //Fehler 6
+    @Test
+    public void testFeldSymbolErscheintAufAngeklicktemFeld(){
+        for (int i=1;i<5;i++){
+            frame.turn(0,i);
+        }for (int i=0;i<5;i++){
+            frame.turn(1,i);
+        }
+        frame.turn(2,1);
+        frame.turn(2,0);
+        frame.turn(2,3);
+        frame.turn(2,2);
+        frame.turn(3,0);
+        frame.turn(2,4);
+        frame.turn(3,2);
+        frame.turn(3,1);
+        frame.turn(3,4);
+        frame.turn(3,3);
+        frame.turn(3,4);
+
+        int actual = board.get2d(0, 0);
+        assertEquals(0, actual);
+    }
+
+    //Fehler 7
+    @Test
+    public void testVFormationKeinGewinn(){
+        frame.turn(0,1);
+        frame.turn(0,2);
+        frame.turn(1,2);
+        frame.turn(1,3);
+        WinState winner = frame.turn(0,3);
+
+        assertSame(WinState.none, winner);
+    }
+
+    //Fehler 8
+    @Test
+    public void testUnentschieden()  {
+        frame.turn(0, 0);
+        frame.turn(1, 0);
+        frame.turn(2, 0);
+        frame.turn(3, 0);
+        frame.turn(1, 1);
+        frame.turn(0, 1);
+        frame.turn(3, 1);
+        frame.turn(2, 1);
+        frame.turn(1, 2);
+        frame.turn(0, 2);
+        frame.turn(3, 2);
+        frame.turn(2, 2);
+        frame.turn(0, 3);
+        frame.turn(1, 3);
+        frame.turn(2, 3);
+        WinState winner = frame.turn(3, 3);
+        assertSame(WinState.none, winner);
+    }
+
+    //Fehler 9
+    @Test
+    public void BackSlash(){
+        frame.turn(1, 4);//PLayer1
+        frame.turn(2, 2);//Player2
+        frame.turn(2, 3);//PLayer1
+        frame.turn(3, 1);//Player2
+        frame.turn(3, 2);//PLayer1
+        WinState winner = board.checkWin();
+        assertSame(WinState.player1, winner);
+    }
+
+    //Fehler 10
+    @Test
+    public void testFeld_4_0()  {
+        frame.turn(2, 2);
+        frame.turn(1, 2);
+        frame.turn(1, 3);
+        frame.turn(0, 3);
+        WinState winner = frame.turn(0, 4);
+        assertSame(WinState.player1, winner);
+    }
+
+    @Test
+    public void changePlayerIcon(){
+        p1.setIcon(Ressources.icon_tessa_blue);
+        p2.setIcon(Ressources.icon_tessa_red);
+        assertEquals(p1.getIconString(),"TeSSA blue");
+        assertEquals(p2.getIconString(),"TeSSA red");
+        p1.setIcon(null);
+        assertEquals(p1.getIconString(),"");
+        assertEquals(p1.toString(),"[Player 1]");
     }
 }

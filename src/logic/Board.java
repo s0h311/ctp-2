@@ -132,7 +132,6 @@ public class Board {
                     if (!win && (m + k <= getM()) && (n + k <= getN())) {
                         win = true;
                         for (int i = 0; i < getK(); i++) {
-                            System.out.println("m: "+m+",n: "+n+", k:"+k+", i: "+i);
                             if (checkPlayer != board[m + i][n + i]) {
                                 win = false;
                             }

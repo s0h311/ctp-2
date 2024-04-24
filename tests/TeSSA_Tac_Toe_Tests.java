@@ -8,10 +8,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.Component;
-import java.awt.Container;
+import java.awt.*;
 import javax.swing.*;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -309,12 +311,52 @@ public class TeSSA_Tac_Toe_Tests {
     @Test
     public void checkBoard(){
         assertEquals(board.getM()*board.getN(),board.getSize());
-        frame.turn(0, 0);
-        frame.turn(0, 1);
-        frame.turn(1, 0);
-        frame.turn(1, 1);
-        frame.turn(2, 1);
-        WinState winSt = frame.turn(1, 0);
-        frame.checkWinner(winSt);
+    }
+
+    @Test
+    public void testCheckWinner(){
+        frame.checkWinner(WinState.tie);
+        frame.checkWinner(WinState.unknown);
+
+        Container container = frame.settingsFrame().getContentPane();
+        Component[] containerComponents = container.getComponents();
+        JPanel panel = (JPanel) containerComponents[0];
+        Component[] components = panel.getComponents();
+
+        List<JComboBox> comboBoxes = new ArrayList<>();
+        JButton saveButton = new JButton();
+
+        for (Component component : components) {
+            if (component instanceof JComboBox) {
+                comboBoxes.add((JComboBox) component);
+            }
+
+            if (component instanceof JButton && ((JButton) component).getText().equals("Save changes")) {
+                saveButton = (JButton) component;
+            }
+        }
+
+        comboBoxes.get(0).setSelectedItem("0");
+        comboBoxes.get(1).setSelectedItem("X");
+
+        saveButton.doClick();
+
+        assertEquals("O", p1.getIconString());
+        assertEquals("X", p2.getIconString());
+    }
+
+    @Test
+    public void testActionPerformed(){
+        //TODO: Besser an die Elemente kommen
+        Object[] elements= frame.getElements();
+        for (Object element : elements) {
+            if (element instanceof JButton) {
+                ((JButton) element).doClick();
+            }else  if (element instanceof JMenuItem) {
+                ((JMenuItem) element).doClick();
+            } else if (element instanceof JEditorPane) {
+                //todo: action triggern
+            }
+        }
     }
 }

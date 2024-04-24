@@ -46,6 +46,11 @@ public class MainWindow extends JFrame {
     private final Player player1, player2;
     private final Board board;
     private int turnCnt = 0;
+    private Object[] elements = new Object[3];
+
+    public Object[] getElements() {
+        return elements;
+    }
 
     public static void setDebugg(boolean b) {
         DEBUG = b;
@@ -74,8 +79,9 @@ public class MainWindow extends JFrame {
 
         JMenuItem configMenuItem = new JMenuItem("Settings");
         mnNewMenu.add(configMenuItem);
-        configMenuItem.addActionListener(new ActionListener() {
+        elements[0]=configMenuItem;
 
+        configMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 settingsFrame();
@@ -174,6 +180,7 @@ public class MainWindow extends JFrame {
                             }
                         }
                     });
+                    elements[1]=ep;
                     ep.setEditable(false);
                     ep.setBackground(label.getBackground());
                     JOptionPane.showMessageDialog(settingsFrame, ep);
@@ -240,6 +247,7 @@ public class MainWindow extends JFrame {
                 final int in = n;
                 JButton btn = new JButton("");
                 btn.setIcon(Ressources.icon_none);
+                elements[2]=btn;
                 btn.addActionListener(new ActionListener() {
 
                     @Override

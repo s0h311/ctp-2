@@ -112,6 +112,7 @@ public class Board {
                             }
                         }
                     }
+
                     if (!win && m + k <= getM()) {
                         win = true;
                         for (int i = 0; i < getK(); i++) {
@@ -121,26 +122,20 @@ public class Board {
                             }
                         }
                     }
-                    if (!win) {
-                        win = true;
-                        for (int i = 0; i < getK(); i++) {
-                            if (checkPlayer != board[(m + i) % getM()][n]) {
-                                win = false;
-                                break;
-                            }
-                        }
-                    }
+
                     if (!win && (m + k <= getM()) && (n + k <= getN())) {
                         win = true;
                         for (int i = 0; i < getK(); i++) {
                             if (checkPlayer != board[m + i][n + i]) {
                                 win = false;
                             }
+
                             if (getM() < 3 && getN() < 3) {
                                 win = true;
                             }
                         }
                     }
+
                     if (!win && (m + k <= getM()) && (n - (k - 1) >= 0)) {
                         win = true;
                         for (int i = 0; i < getK(); i++) {
@@ -150,7 +145,8 @@ public class Board {
                             }
                         }
                     }
-                    if (!win && (m + 1 < getM()) && (n + 1 < getN())) {
+
+                    if (!win && (m + 2 < getM()) && (n + 1 < getN())) {
                         win = true;
                         if (checkPlayer != board[m][n]) {
                             win = false;
@@ -162,18 +158,20 @@ public class Board {
                             win = false;
                         }
                     }
+
                     if (!win && (m + 1 < getM()) && (n + 2 < getN())) {
                         win = true;
                         if (checkPlayer != board[m][n]) {
                             win = false;
                         }
-                        if (checkPlayer != board[m][n + 2]) {
+                        if (checkPlayer != board[m][n + 1]) {
                             win = false;
                         }
                         if (checkPlayer != board[m + 1][n + 1]) {
                             win = false;
                         }
                     }
+
                     if (win) {
                         return WinState.values()[checkPlayer];
                     }

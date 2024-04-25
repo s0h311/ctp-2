@@ -333,7 +333,7 @@ public class TeSSA_Tac_Toe_Tests {
             }
         }
 
-        comboBoxes.get(0).setSelectedItem("0");
+        comboBoxes.get(0).setSelectedItem("O");
         comboBoxes.get(1).setSelectedItem("X");
 
         saveButton.doClick();

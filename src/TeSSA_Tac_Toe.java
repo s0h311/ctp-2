@@ -13,7 +13,7 @@ public class TeSSA_Tac_Toe {
 
         if (args.length == 1) {
             boolean b = (1 == Integer.valueOf(args[0])) ? true : false;
-            MainWindow.setDebugg(b);
+            MainWindow.setDebug(b);
         }
 
         EventQueue.invokeLater(new Runnable() {

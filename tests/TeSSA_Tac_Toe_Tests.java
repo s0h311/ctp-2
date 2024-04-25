@@ -11,9 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.awt.*;
 import javax.swing.*;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -33,7 +30,7 @@ public class TeSSA_Tac_Toe_Tests {
         board = new Board(4, 5, 3, p1, p2);
         frame = new MainWindow(p1, p2, board);
         frame.setVisible(true);
-        MainWindow.setDebugg(true);
+        MainWindow.setDebug(true);
     }
 
     @AfterEach
@@ -198,12 +195,12 @@ public class TeSSA_Tac_Toe_Tests {
             }
         }
 
-        comboBoxes.get(0).setSelectedItem("TeSSA Red");
+        comboBoxes.get(0).setSelectedItem("tessa-red");
         comboBoxes.get(1).setSelectedItem("X");
 
         saveButton.doClick();
 
-        assertEquals("TeSSA red", p1.getIconString());
+        assertEquals("tessa-red", p1.getIconString());
         assertEquals("O", p2.getIconString());
     }
 
@@ -293,8 +290,8 @@ public class TeSSA_Tac_Toe_Tests {
         p1.setIcon(Ressources.icon_tessa_blue);
         p2.setIcon(Ressources.icon_tessa_red);
 
-        assertEquals("TeSSA blue", p1.getIconString());
-        assertEquals("TeSSA red", p2.getIconString());
+        assertEquals("tessa-blue", p1.getIconString());
+        assertEquals("tessa-red", p2.getIconString());
     }
 
     @Test

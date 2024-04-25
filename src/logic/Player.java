@@ -6,7 +6,7 @@ import gfx.Ressources;
 
 public class Player {
 
-    private String name;
+    private final String name;
     private ImageIcon icon;
 
     public Player(String name, ImageIcon icon) {
@@ -18,17 +18,8 @@ public class Player {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return "[" + name + "]";
-    }
-
     public ImageIcon getIcon() {
         return icon;
-    }
-
-    public void setIcon(ImageIcon icon) {
-        this.icon = icon;
     }
 
     public String getIconString() {
@@ -39,12 +30,20 @@ public class Player {
             return "O";
         }
         if (Ressources.icon_tessa_blue == icon) {
-            return "TeSSA blue";
+            return "tessa-blue";
         }
         if (Ressources.icon_tessa_red == icon) {
-            return "TeSSA red";
+            return "tessa-red";
         }
         return "";
     }
 
+    public void setIcon(ImageIcon icon) {
+        this.icon = icon;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + name + "]";
+    }
 }

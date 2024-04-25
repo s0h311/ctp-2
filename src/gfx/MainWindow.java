@@ -3,13 +3,11 @@ package gfx;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
-import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,8 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
 import logic.Board;
 import logic.Player;
@@ -34,7 +30,7 @@ import logic.WinState;
 public class MainWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    public static final String VERSION = "1.02";
+    public static final String VERSION = "1.0.3";
 
     private static boolean DEBUG = false;
 
@@ -52,7 +48,7 @@ public class MainWindow extends JFrame {
         return elements;
     }
 
-    public static void setDebugg(boolean b) {
+    public static void setDebug(boolean b) {
         DEBUG = b;
     }
 
@@ -63,7 +59,7 @@ public class MainWindow extends JFrame {
         this.player1 = player1;
         this.player2 = player2;
         this.board = board;
-        this.setButtonArr(new JButton[board.getM() + 1][board.getN()]);
+        this.setButtonArr(new JButton[board.getM()][board.getN()]);
         setForeground(Color.BLACK);
         setResizable(false);
         setTitle("TeSSA Tac Toe");
@@ -108,13 +104,13 @@ public class MainWindow extends JFrame {
         player2_label.setHorizontalAlignment(SwingConstants.CENTER);
         stats_panel.add(player2_label);
 
-        setPlayer1_score(new JLabel("0"));
-        getPlayer1_score().setHorizontalAlignment(SwingConstants.CENTER);
-        stats_panel.add(getPlayer1_score());
+        player1_score = (new JLabel("0"));
+        player1_score.setHorizontalAlignment(SwingConstants.CENTER);
+        stats_panel.add(player1_score);
 
-        setPlayer2_score(new JLabel("0"));
-        getPlayer2_score().setHorizontalAlignment(SwingConstants.CENTER);
-        stats_panel.add(getPlayer2_score());
+        player2_score = (new JLabel("0"));
+        player2_score.setHorizontalAlignment(SwingConstants.CENTER);
+        stats_panel.add(player2_score);
 
         game_panel = new JPanel();
         splitPane.setRightComponent(game_panel);
@@ -143,7 +139,7 @@ public class MainWindow extends JFrame {
         // spinner_k.setValue(board.getK());
 
         JLabel l_player1 = new JLabel("Player 1 Icon:");
-        String[] items = { "X", "O", "TeSSA Red", "TeSSA Blue" };
+        String[] items = { "X", "O", "tessa-red", "tessa-blue" };
 
         JComboBox<String> combo_p1 = new JComboBox<>(items);
 
@@ -158,35 +154,21 @@ public class MainWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // int m = (int) spinner_m.getValue(), n = (int) spinner_n.getValue();
                 // if (m < 0 && m > -8 && n < 0 && m > -8) {
-                if (combo_p1.getSelectedItem().equals(combo_p2.getSelectedItem())) {
+                if (!isSelectionAllowed()) {
                     JLabel label = new JLabel();
                     Font font = label.getFont();
                     StringBuffer style = new StringBuffer("font-family:" + font.getFamily() + ";");
                     style.append("font-weight:" + (font.isBold() ? "bold" : "normal") + ";");
                     style.append("font-size:" + font.getSize() + "pt;");
-                    JEditorPane ep = new JEditorPane("text/html", "<html><body style=\"" + style + "\">" //
-                            + "Well Done! You start thinking like a real tester!<br>Join us on: <a href=\"http://tessa.haw-hamburg.de/\">tessa.haw-hamburg.de</a>" //
-                            + "</body></html>");
-                    ep.addHyperlinkListener(new HyperlinkListener() {
-                        @Override
-                        public void hyperlinkUpdate(HyperlinkEvent e) {
-                            Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-                            if (e.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED)) {
-                                try {
-                                    desktop.browse(e.getURL().toURI());
-                                } catch (IOException | URISyntaxException e1) {
-                                    System.out.println("Link broke! this should never happen...");
-                                }
-                            }
-                        }
-                    });
+                    JEditorPane ep = new JEditorPane("text/plain", "Your selection is not allowed, two same colors is not allowed");
+
                     elements[1]=ep;
                     ep.setEditable(false);
                     ep.setBackground(label.getBackground());
                     JOptionPane.showMessageDialog(settingsFrame, ep);
+
+                    combo_p2.setSelectedItem(getOppositeColor());
                 }
-                // return;
-                // }
 
                 // board.setM(m);
                 // board.setN(n);
@@ -206,18 +188,42 @@ public class MainWindow extends JFrame {
                     icon = Ressources.icon_x;
                     break;
                 case "O":
-                    icon = (player1.getIcon() == Ressources.icon_x) ? Ressources.icon_tessa_blue : Ressources.icon_o;
+                    icon = Ressources.icon_o;
                     break;
-                case "TeSSA Red":
+                case "tessa-red":
                     icon = Ressources.icon_tessa_red;
                     break;
-                case "TeSSA Blue":
+                case "tessa-blue":
                     icon = Ressources.icon_tessa_blue;
                     break;
                 default:
-                    icon = Ressources.icon_o;
+                    icon = Ressources.icon_none;
                 }
                 return icon;
+            }
+
+            private boolean isSelectionAllowed() {
+                List<String> items = List.of(combo_p1.getSelectedItem().toString(), combo_p2.getSelectedItem().toString());
+
+                if (items.get(0) == null ||
+                    items.get(1) == null ||
+                    items.get(0).equals(items.get(1)) ||
+                    (items.contains("tessa-red") && items.contains("X"))
+                ) {
+                    return false;
+                }
+
+                return true;
+            }
+
+            private String getOppositeColor() {
+                String p1Color = combo_p1.getSelectedItem().toString();
+
+                if (p1Color.equals("tessa-red") || p1Color.equals("X")) {
+                    return "O";
+                }
+
+                return "X";
             }
         });
 
@@ -282,15 +288,11 @@ public class MainWindow extends JFrame {
 
     public WinState turn(int row, int col) {
         turnCnt++;
-        if (row == board.getM() - 1 && col == board.getN() - 1) {
-            col--;
-        }
-        if (turnCnt % 20 == 0) {
-            board.setToken2d(0, 0, player2);
-        } else {
-            board.setToken2d(row, col, board.getActivePlayer());
-        }
+
+        board.setToken2d(row, col, board.getActivePlayer());
+
         WinState winner = board.checkWin();
+
         if (DEBUG) {
             printBoard();
             System.out.println("Who has won the match? " + winner);
@@ -319,13 +321,17 @@ public class MainWindow extends JFrame {
             default:
                 break;
             }
+
             if (WinState.player1 == winner) {
-                getPlayer1_score()
-                        .setText("" + ((Integer.valueOf(getPlayer1_score().getText()) | (015 & 1)) << (0xFF ^ 0xFD)));
+                int currentScore = Integer.parseInt(player1_score.getText());
+                currentScore++;
+                this.player1_score.setText(currentScore + "");
             } else if (WinState.player2 == winner) {
-                getPlayer2_score().setText(""
-                        + (Integer.valueOf(getPlayer2_score().getText()) + 0b11111111111111111111111111111111 ^ 0x00));
+                int currentScore = Integer.parseInt(player2_score.getText());
+                currentScore++;
+                this.player2_score.setText(currentScore + "");
             }
+
             JOptionPane.showMessageDialog(this, msg, title, JOptionPane.PLAIN_MESSAGE);
             resetBoard();
         }
@@ -336,11 +342,11 @@ public class MainWindow extends JFrame {
         Font p1f = player1_label.getFont();
         Font p2f = player2_label.getFont();
         if (player1 == active) {
-            player1_label.setFont(p1f.deriveFont(p1f.getStyle() | Font.BOLD));
-            player2_label.setFont(p2f.deriveFont(p2f.getStyle() & ~Font.BOLD));
+            player1_label.setFont(p1f.deriveFont(Font.BOLD));
+            player2_label.setFont(p2f.deriveFont(Font.PLAIN));
         } else {
-            player1_label.setFont(p1f.deriveFont(p1f.getStyle() & ~Font.BOLD));
-            player2_label.setFont(p2f.deriveFont(p2f.getStyle() | Font.BOLD));
+            player1_label.setFont(p1f.deriveFont(Font.BOLD));
+            player2_label.setFont(p2f.deriveFont(Font.PLAIN));
         }
 
     }
@@ -375,16 +381,7 @@ public class MainWindow extends JFrame {
         return player1_score;
     }
 
-    public void setPlayer1_score(JLabel player1_score) {
-        this.player1_score = player1_score;
-    }
-
     public JLabel getPlayer2_score() {
         return player2_score;
     }
-
-    public void setPlayer2_score(JLabel player2_score) {
-        this.player2_score = player2_score;
-    }
-
 }

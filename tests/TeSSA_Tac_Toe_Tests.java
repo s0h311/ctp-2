@@ -24,7 +24,7 @@ public class TeSSA_Tac_Toe_Tests {
     private static final int TIME_OUT = 0;
 
     @BeforeEach
-    public void beforeEach() throws Exception {
+    public void beforeEach() {
         p1 = new Player("Player 1", Ressources.icon_x);
         p2 = new Player("Player 2", Ressources.icon_o);
         board = new Board(4, 5, 3, p1, p2);
@@ -34,7 +34,7 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         p1 = p2 = null;
         board = null;
         frame = null;
@@ -99,7 +99,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 1
     @Test
-    public void rightBottomCorner() {
+    public void testClickRightBottomCorner() {
         frame.turn(3, 4);
 
         int actual1 = board.get2d(3, 4);
@@ -111,7 +111,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 2
     @Test
-    public void testGewinnÜberEck()  {
+    public void testWinOverCorner()  {
         frame.turn(2, 0);
         frame.turn(2, 1);
         frame.turn(2, 2);
@@ -123,7 +123,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 3
     @Test
-    public void testSpieler1Punkte(){
+    public void testPlayer1ScoreIncrementedAfterTurns(){
         frame.turn(0,1);
         frame.turn(0,2);
         frame.turn(1,1);
@@ -136,7 +136,7 @@ public class TeSSA_Tac_Toe_Tests {
         assertEquals(1,actual);
     }
     @Test
-    public void testSpieler2Punkte(){
+    public void testPlayer2ScoreIncrementedAfterTurns(){
         frame.turn(1,2);
         frame.turn(0,2);
         frame.turn(1,1);
@@ -153,7 +153,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 4.1
     @Test
-    public void testIgnoirertLeerVonOben()  {
+    public void testIgnoreEmptyCellsFromTop()  {
         frame.turn(0, 0);
         frame.turn(1, 2);
         frame.turn(1, 0);
@@ -164,7 +164,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 4.2
     @Test
-    public void testIgnoirertLeerVonUnten()  {
+    public void testIgnoreEmptyCellsFromBottom()  {
         frame.turn(3, 0);
         frame.turn(1, 2);
         frame.turn(2, 0);
@@ -206,7 +206,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 6
     @Test
-    public void testFeldSymbolErscheintAufAngeklicktemFeld(){
+    public void testFieldSymbolAppearsOnClickedCell(){
         for (int i=1;i<5;i++){
             frame.turn(0,i);
         }for (int i=0;i<5;i++){
@@ -230,7 +230,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 7
     @Test
-    public void testVFormationKeinGewinn(){
+    public void testVFormationNotWinning(){
         frame.turn(0,1);
         frame.turn(0,2);
         frame.turn(1,2);
@@ -242,7 +242,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 8
     @Test
-    public void testUnentschieden()  {
+    public void testDrawAfter20Turns()  {
         frame.turn(0, 0);
         frame.turn(1, 0);
         frame.turn(2, 0);
@@ -264,7 +264,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 9
     @Test
-    public void BackSlash(){
+    public void BackSlashPreventsWinning(){
         frame.turn(1, 4);//PLayer1
         frame.turn(2, 2);//Player2
         frame.turn(2, 3);//PLayer1
@@ -276,7 +276,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 10
     @Test
-    public void testFeld_4_0()  {
+    public void testFieldTopRightNotEvaluated()  {
         frame.turn(2, 2);
         frame.turn(1, 2);
         frame.turn(1, 3);

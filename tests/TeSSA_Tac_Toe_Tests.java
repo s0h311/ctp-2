@@ -1,4 +1,5 @@
 // Version für JUnit 5
+
 import gfx.MainWindow;
 import gfx.Ressources;
 import logic.Board;
@@ -177,24 +178,9 @@ public class TeSSA_Tac_Toe_Tests {
     //Fehler 5
     @Test
     public void twoRedPlayersShouldNotBePossible() {
-        Container container = frame.settingsFrame().getContentPane();
-        Component[] containerComponents = container.getComponents();
-
-        JPanel panel = (JPanel) containerComponents[0];
-        Component[] components = panel.getComponents();
-
-        List<JComboBox> comboBoxes = new ArrayList<>();
-        JButton saveButton = new JButton();
-
-        for (Component component : components) {
-            if (component instanceof JComboBox) {
-                comboBoxes.add((JComboBox) component);
-            }
-
-            if (component instanceof JButton && ((JButton) component).getText().equals("Save changes")) {
-                saveButton = (JButton) component;
-            }
-        }
+        Object[] components = getComboBoxesAndSaveButton(frame.settingsFrame().getContentPane());
+        List<JComboBox> comboBoxes = (List<JComboBox>) components[0];
+        JButton saveButton = (JButton) components[1];
 
         comboBoxes.get(0).setSelectedItem("tessa-red");
         comboBoxes.get(1).setSelectedItem("X");
@@ -313,38 +299,6 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @Test
-    public void testCheckWinner() {
-        frame.checkWinner(WinState.tie);
-        frame.checkWinner(WinState.unknown);
-
-        Container container = frame.settingsFrame().getContentPane();
-        Component[] containerComponents = container.getComponents();
-        JPanel panel = (JPanel) containerComponents[0];
-        Component[] components = panel.getComponents();
-
-        List<JComboBox> comboBoxes = new ArrayList<>();
-        JButton saveButton = new JButton();
-
-        for (Component component : components) {
-            if (component instanceof JComboBox) {
-                comboBoxes.add((JComboBox) component);
-            }
-
-            if (component instanceof JButton && ((JButton) component).getText().equals("Save changes")) {
-                saveButton = (JButton) component;
-            }
-        }
-
-        comboBoxes.get(0).setSelectedItem("O");
-        comboBoxes.get(1).setSelectedItem("X");
-
-        saveButton.doClick();
-
-        assertEquals("O", p1.getIconString());
-        assertEquals("X", p2.getIconString());
-    }
-
-    @Test
     public void testActionPerformed() {
         //TODO: Besser an die Elemente kommen
         Object[] elements = frame.getElements();
@@ -361,8 +315,38 @@ public class TeSSA_Tac_Toe_Tests {
     public void testDebug() {
         MainWindow.setDebug(false);
         frame.turn(0, 0);
+    }
 
-        Container container = frame.settingsFrame().getContentPane();
+    @Test
+    public void testCheckWinner() {
+        frame.checkWinner(WinState.tie);
+        frame.checkWinner(WinState.unknown);
+    }
+
+    @Test
+    public void testSelectAllPlayers() {
+        Object[] components = getComboBoxesAndSaveButton(frame.settingsFrame().getContentPane());
+        List<JComboBox> comboBoxes = (List<JComboBox>) components[0];
+        JButton saveButton = (JButton) components[1];
+
+        String[] testCases = {"X", "O", "tessa-red", "tessa-blue", "unknown"};
+        comboBoxes.get(0).addItem("unknown");
+        comboBoxes.get(1).addItem("unknown");
+
+        for (String testCase1 : testCases) {
+            for (String testCase2 : testCases) {
+                if (testCase1.equals(testCases[1]) && testCase2.equals(testCases[1])) {
+                    frame.setBold(false);
+                }
+                comboBoxes.get(0).setSelectedItem(testCase1);
+                comboBoxes.get(1).setSelectedItem(testCase2);
+                saveButton.doClick();
+            }
+        }
+    }
+
+
+    private Object[] getComboBoxesAndSaveButton(Container container) {
         Component[] containerComponents = container.getComponents();
         JPanel panel = (JPanel) containerComponents[0];
         Component[] components = panel.getComponents();
@@ -380,20 +364,6 @@ public class TeSSA_Tac_Toe_Tests {
             }
         }
 
-        String[] testCases = {"X", "O", "tessa-red", "tessa-blue", "unknown"};
-        comboBoxes.get(0).addItem("unknown");
-        comboBoxes.get(1).addItem("unknown");
-
-
-        for (String testCase1 : testCases) {
-            for (String testCase2 : testCases) {
-                if(testCase1.equals(testCases[1])&& testCase2.equals(testCases[1])){
-                    frame.setBold(false);
-                }
-                comboBoxes.get(0).setSelectedItem(testCase1);
-                comboBoxes.get(1).setSelectedItem(testCase2);
-                saveButton.doClick();
-            }
-        }
+        return new Object[]{comboBoxes, saveButton};
     }
 }

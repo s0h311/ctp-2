@@ -111,7 +111,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 2
     @Test
-    public void testWinOverCorner()  {
+    public void testWinOverCorner() {
         frame.turn(2, 0);
         frame.turn(2, 1);
         frame.turn(2, 2);
@@ -123,37 +123,38 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 3
     @Test
-    public void testPlayer1ScoreIncrementedAfterTurns(){
-        frame.turn(0,1);
-        frame.turn(0,2);
-        frame.turn(1,1);
-        frame.turn(0,3);
-        WinState winner = frame.turn(2,1);
+    public void testPlayer1ScoreIncrementedAfterTurns() {
+        frame.turn(0, 1);
+        frame.turn(0, 2);
+        frame.turn(1, 1);
+        frame.turn(0, 3);
+        WinState winner = frame.turn(2, 1);
 
         frame.checkWinner(winner);
         String actualjlabel = frame.getPlayer1_score().getText();
         int actual = Integer.parseInt(actualjlabel);
-        assertEquals(1,actual);
+        assertEquals(1, actual);
     }
+
     @Test
-    public void testPlayer2ScoreIncrementedAfterTurns(){
-        frame.turn(1,2);
-        frame.turn(0,2);
-        frame.turn(1,1);
-        frame.turn(0,3);
-        frame.turn(2,1);
-        WinState winner = frame.turn(0,1);
+    public void testPlayer2ScoreIncrementedAfterTurns() {
+        frame.turn(1, 2);
+        frame.turn(0, 2);
+        frame.turn(1, 1);
+        frame.turn(0, 3);
+        frame.turn(2, 1);
+        WinState winner = frame.turn(0, 1);
 
 
         frame.checkWinner(winner);
         String actualjlabel = frame.getPlayer2_score().getText();
         int actual = Integer.parseInt(actualjlabel);
-        assertEquals(1,actual);
+        assertEquals(1, actual);
     }
 
     //Fehler 4.1
     @Test
-    public void testIgnoreEmptyCellsFromTop()  {
+    public void testIgnoreEmptyCellsFromTop() {
         frame.turn(0, 0);
         frame.turn(1, 2);
         frame.turn(1, 0);
@@ -164,7 +165,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 4.2
     @Test
-    public void testIgnoreEmptyCellsFromBottom()  {
+    public void testIgnoreEmptyCellsFromBottom() {
         frame.turn(3, 0);
         frame.turn(1, 2);
         frame.turn(2, 0);
@@ -206,23 +207,24 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 6
     @Test
-    public void testFieldSymbolAppearsOnClickedCell(){
-        for (int i=1;i<5;i++){
-            frame.turn(0,i);
-        }for (int i=0;i<5;i++){
-            frame.turn(1,i);
+    public void testFieldSymbolAppearsOnClickedCell() {
+        for (int i = 1; i < 5; i++) {
+            frame.turn(0, i);
         }
-        frame.turn(2,1);
-        frame.turn(2,0);
-        frame.turn(2,3);
-        frame.turn(2,2);
-        frame.turn(3,0);
-        frame.turn(2,4);
-        frame.turn(3,2);
-        frame.turn(3,1);
-        frame.turn(3,4);
-        frame.turn(3,3);
-        frame.turn(3,4);
+        for (int i = 0; i < 5; i++) {
+            frame.turn(1, i);
+        }
+        frame.turn(2, 1);
+        frame.turn(2, 0);
+        frame.turn(2, 3);
+        frame.turn(2, 2);
+        frame.turn(3, 0);
+        frame.turn(2, 4);
+        frame.turn(3, 2);
+        frame.turn(3, 1);
+        frame.turn(3, 4);
+        frame.turn(3, 3);
+        frame.turn(3, 4);
 
         int actual = board.get2d(0, 0);
         assertEquals(0, actual);
@@ -230,19 +232,19 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 7
     @Test
-    public void testVFormationNotWinning(){
-        frame.turn(0,1);
-        frame.turn(0,2);
-        frame.turn(1,2);
-        frame.turn(1,3);
-        WinState winner = frame.turn(0,3);
+    public void testVFormationNotWinning() {
+        frame.turn(0, 1);
+        frame.turn(0, 2);
+        frame.turn(1, 2);
+        frame.turn(1, 3);
+        WinState winner = frame.turn(0, 3);
 
         assertSame(WinState.none, winner);
     }
 
     //Fehler 8
     @Test
-    public void testDrawAfter20Turns()  {
+    public void testDrawAfter20Turns() {
         frame.turn(0, 0);
         frame.turn(1, 0);
         frame.turn(2, 0);
@@ -264,7 +266,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 9
     @Test
-    public void BackSlashPreventsWinning(){
+    public void BackSlashPreventsWinning() {
         frame.turn(1, 4);//PLayer1
         frame.turn(2, 2);//Player2
         frame.turn(2, 3);//PLayer1
@@ -276,7 +278,7 @@ public class TeSSA_Tac_Toe_Tests {
 
     //Fehler 10
     @Test
-    public void testFieldTopRightNotEvaluated()  {
+    public void testFieldTopRightNotEvaluated() {
         frame.turn(2, 2);
         frame.turn(1, 2);
         frame.turn(1, 3);
@@ -286,7 +288,7 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @Test
-    public void testSetIcon(){
+    public void testSetIcon() {
         p1.setIcon(Ressources.icon_tessa_blue);
         p2.setIcon(Ressources.icon_tessa_red);
 
@@ -295,23 +297,23 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @Test
-    public void testSetIconToNull(){
+    public void testSetIconToNull() {
         p1.setIcon(null);
         assertEquals("", p1.getIconString());
     }
 
     @Test
-    public void testToString(){
+    public void testToString() {
         assertEquals("[Player 1]", p1.toString());
     }
 
     @Test
-    public void checkBoard(){
-        assertEquals(board.getM()*board.getN(),board.getSize());
+    public void checkBoard() {
+        assertEquals(board.getM() * board.getN(), board.getSize());
     }
 
     @Test
-    public void testCheckWinner(){
+    public void testCheckWinner() {
         frame.checkWinner(WinState.tie);
         frame.checkWinner(WinState.unknown);
 
@@ -343,16 +345,54 @@ public class TeSSA_Tac_Toe_Tests {
     }
 
     @Test
-    public void testActionPerformed(){
+    public void testActionPerformed() {
         //TODO: Besser an die Elemente kommen
-        Object[] elements= frame.getElements();
+        Object[] elements = frame.getElements();
         for (Object element : elements) {
             if (element instanceof JButton) {
                 ((JButton) element).doClick();
-            }else  if (element instanceof JMenuItem) {
+            } else if (element instanceof JMenuItem) {
                 ((JMenuItem) element).doClick();
-            } else if (element instanceof JEditorPane) {
-                //todo: action triggern
+            }
+        }
+    }
+
+    @Test
+    public void testDebug() {
+        MainWindow.setDebug(false);
+        frame.turn(0, 0);
+
+        Container container = frame.settingsFrame().getContentPane();
+        Component[] containerComponents = container.getComponents();
+        JPanel panel = (JPanel) containerComponents[0];
+        Component[] components = panel.getComponents();
+
+        List<JComboBox> comboBoxes = new ArrayList<>();
+        JButton saveButton = new JButton();
+
+        for (Component component : components) {
+            if (component instanceof JComboBox) {
+                comboBoxes.add((JComboBox) component);
+            }
+
+            if (component instanceof JButton && ((JButton) component).getText().equals("Save changes")) {
+                saveButton = (JButton) component;
+            }
+        }
+
+        String[] testCases = {"X", "O", "tessa-red", "tessa-blue", "unknown"};
+        comboBoxes.get(0).addItem("unknown");
+        comboBoxes.get(1).addItem("unknown");
+
+
+        for (String testCase1 : testCases) {
+            for (String testCase2 : testCases) {
+                if(testCase1.equals(testCases[1])&& testCase2.equals(testCases[1])){
+                    frame.setBold(false);
+                }
+                comboBoxes.get(0).setSelectedItem(testCase1);
+                comboBoxes.get(1).setSelectedItem(testCase2);
+                saveButton.doClick();
             }
         }
     }

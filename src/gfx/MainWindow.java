@@ -48,6 +48,11 @@ public class MainWindow extends JFrame {
         return elements;
     }
 
+    private boolean isBold = true;
+    public void setBold(boolean bold) {
+        isBold = bold;
+    }
+
     public static void setDebug(boolean b) {
         DEBUG = b;
     }
@@ -75,7 +80,7 @@ public class MainWindow extends JFrame {
 
         JMenuItem configMenuItem = new JMenuItem("Settings");
         mnNewMenu.add(configMenuItem);
-        elements[0]=configMenuItem;
+        elements[0] = configMenuItem;
 
         configMenuItem.addActionListener(new ActionListener() {
             @Override
@@ -158,11 +163,9 @@ public class MainWindow extends JFrame {
                     JLabel label = new JLabel();
                     Font font = label.getFont();
                     StringBuffer style = new StringBuffer("font-family:" + font.getFamily() + ";");
-                    style.append("font-weight:" + (font.isBold() ? "bold" : "normal") + ";");
+                    style.append("font-weight:" + (isBold ? "bold" : "normal") + ";");
                     style.append("font-size:" + font.getSize() + "pt;");
                     JEditorPane ep = new JEditorPane("text/plain", "Your selection is not allowed, two same colors is not allowed");
-
-                    elements[1]=ep;
                     ep.setEditable(false);
                     ep.setBackground(label.getBackground());
                     JOptionPane.showMessageDialog(settingsFrame, ep);
@@ -184,20 +187,20 @@ public class MainWindow extends JFrame {
             public ImageIcon get_icon_for_player(String selectedItem) {
                 ImageIcon icon;
                 switch (selectedItem) {
-                case "X":
-                    icon = Ressources.icon_x;
-                    break;
-                case "O":
-                    icon = Ressources.icon_o;
-                    break;
-                case "tessa-red":
-                    icon = Ressources.icon_tessa_red;
-                    break;
-                case "tessa-blue":
-                    icon = Ressources.icon_tessa_blue;
-                    break;
-                default:
-                    icon = Ressources.icon_none;
+                    case "X":
+                        icon = Ressources.icon_x;
+                        break;
+                    case "O":
+                        icon = Ressources.icon_o;
+                        break;
+                    case "tessa-red":
+                        icon = Ressources.icon_tessa_red;
+                        break;
+                    case "tessa-blue":
+                        icon = Ressources.icon_tessa_blue;
+                        break;
+                    default:
+                        icon = Ressources.icon_none;
                 }
                 return icon;
             }
@@ -253,7 +256,7 @@ public class MainWindow extends JFrame {
                 final int in = n;
                 JButton btn = new JButton("");
                 btn.setIcon(Ressources.icon_none);
-                elements[2]=btn;
+                elements[2] = btn;
                 btn.addActionListener(new ActionListener() {
 
                     @Override

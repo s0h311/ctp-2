@@ -42,7 +42,7 @@ public class MainWindow extends JFrame {
     private final Player player1, player2;
     private final Board board;
     private int turnCnt = 0;
-    private Object[] elements = new Object[3];
+    private Object[] elements = new Object[2];
 
     public Object[] getElements() {
         return elements;
@@ -80,6 +80,7 @@ public class MainWindow extends JFrame {
 
         JMenuItem configMenuItem = new JMenuItem("Settings");
         mnNewMenu.add(configMenuItem);
+        // ToDO direkt im Test daraug zugreifen?
         elements[0] = configMenuItem;
 
         configMenuItem.addActionListener(new ActionListener() {
@@ -256,7 +257,8 @@ public class MainWindow extends JFrame {
                 final int in = n;
                 JButton btn = new JButton("");
                 btn.setIcon(Ressources.icon_none);
-                elements[2] = btn;
+                // ToDO direkt im Test daraug zugreifen?
+                elements[1] = btn;
                 btn.addActionListener(new ActionListener() {
 
                     @Override
